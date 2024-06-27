@@ -1,0 +1,94 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 style="color:Green">Product Details List</h2>
+        </div>
+    </div>
+    <br />
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Author:</label>
+                    <span class="form-control">@Model.Author</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Title:</label>
+                    <span class="form-control">@Model.Title</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Category:</label>
+                    <span class="form-control">@Model.CategoryId</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Description:</label>
+                    <span class="form-control">@Model.Description</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">List Price:</label>
+                    <span class="form-control">@Model.ListPrice</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Price:</label>
+                    <span class="form-control">@Model.Price</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Price50:</label>
+                    <span class="form-control">@Model.Price50</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">Price100:</label>
+                    <span class="form-control">@Model.Price100</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">ImageUrl:</label>
+                    <span class="form-control">@Model.ImageUrl</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">
+            <i class="bi bi-x-circle"></i> &nbsp;Back To The List
+        </a>
+    </div>
+</div>

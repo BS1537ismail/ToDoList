@@ -1,0 +1,119 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-controller="Product" asp-action="Index" method="get">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by Product Title" name="search">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 style="color:Green">Product List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-x-circle"></i> &nbsp;Create New Product
+            </a>
+        </div>
+    </div>
+    <br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Descripton
+                </th>
+                <th>
+                    List Price
+                </th>
+                <th>
+                    Price 1-50
+                </th>
+                <th>
+                    Price 50+
+                </th>
+                <th>
+                   Price 100+
+                </th>
+                <th>
+                    Image
+                </th>
+                <th style="text-align:center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.OrderBy(x => x.ListPrice))
+            {
+                <tr>
+                    <td width="10%">
+                        @obj.Author
+                    </td>
+                    <td width="10%">
+                        @obj.Title
+                    </td>
+                    <td width="10%">
+                        @obj.CategoryId
+                    </td>
+                    <td width="15%">
+                        @obj.Description
+                    </td>
+                    <td width="10%">
+                        @obj.ListPrice
+                    </td>
+                    <td width="10%">
+                        @obj.Price
+                    </td>
+                    <td width="10%">
+                        @obj.Price50
+                    </td>
+                    <td width="10%">
+                        @obj.Price100
+                    </td>
+                    <td width="10%">
+                        @obj.ImageUrl
+                    </td>
+                    <td>
+                        <div class="w-70 btn-group" role="group">
+
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square">Edit</i>
+                            </a>
+
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@obj.Id" class="btn btn-success mx-2">
+                                <i class="bi bi-bricks">Details</i>
+                            </a>
+
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash">Delete</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    @if (TempData["true"] != null)
+    {
+        <div class="col-6">
+            <a asp-controller="Product" asp-action="Index" class="btn btn-primary">
+                <i class="bi bi-x-circle"></i> &nbsp;Back To The List
+            </a>
+        </div>
+    }
+</div>
