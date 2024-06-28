@@ -5,25 +5,24 @@
 namespace ToDoList.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class addImageUrl : Migration
+    public partial class removeimages : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.DropColumn(
                 name: "ImageUrl",
-                table: "Products",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                table: "Products");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            migrationBuilder.AddColumn<string>(
                 name: "ImageUrl",
-                table: "Products");
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
         }
     }
 }

@@ -18,22 +18,42 @@ namespace ToDoList.DataAccess.Repository
         {
             this.dbContext = dbContext;
             this.dbSet = dbContext.Set<T>();
+            //dbcontext.Categories == dbSet
+            dbContext.Products.Include(x => x.Category).Include(x => x.CategoryId);
         }
         public void Add(T entity)
         {
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> predicate)
+        public T Get(Expression<Func<T, bool>> predicate, string? inclideProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(predicate);
+
+            if (!string.IsNullOrEmpty(inclideProperties))
+            {
+                foreach (var includeProp in inclideProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? inclideProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (!string.IsNullOrEmpty(inclideProperties))
+            {
+                foreach (var includeProp in inclideProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.ToList();
         }
 

@@ -50,9 +50,6 @@
                 <th>
                    Price 100+
                 </th>
-                <th>
-                    Image
-                </th>
                 <th style="text-align:center">Action</th>
             </tr>
         </thead>
@@ -67,7 +64,7 @@
                         @obj.Title
                     </td>
                     <td width="10%">
-                        @obj.CategoryId
+                        @obj.Category.Name
                     </td>
                     <td width="15%">
                         @obj.Description
@@ -84,9 +81,7 @@
                     <td width="10%">
                         @obj.Price100
                     </td>
-                    <td width="10%">
-                        @obj.ImageUrl
-                    </td>
+                   
                     <td>
                         <div class="w-70 btn-group" role="group">
 
@@ -108,6 +103,7 @@
 
         </tbody>
     </table>
+
     @if (TempData["true"] != null)
     {
         <div class="col-6">

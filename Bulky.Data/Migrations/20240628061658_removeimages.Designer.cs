@@ -11,8 +11,8 @@ using ToDoList.DataAccess.Data;
 namespace ToDoList.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240627090240_addImageUrl")]
-    partial class addImageUrl
+    [Migration("20240628061658_removeimages")]
+    partial class removeimages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,10 +60,6 @@ namespace ToDoList.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

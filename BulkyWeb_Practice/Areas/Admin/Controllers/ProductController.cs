@@ -3,6 +3,7 @@ using ToDoList.DataAccess.Repository.IRepository;
 using ToDoList.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ToDoList.DataAccess.Repository;
 
 namespace ToDoListWeb.Areas.Admin.Controllers
 {
@@ -10,15 +11,18 @@ namespace ToDoListWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork dbcontext;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductController(IUnitOfWork dbcontext)
+        public ProductController(IUnitOfWork dbcontext, IWebHostEnvironment webHostEnvironment)
         {
             this.dbcontext = dbcontext;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index(string search)
         {
-            List<Product> categories = dbcontext.ProductRepository.GetAll().ToList();
-           
+            List<Product> categories = dbcontext.ProductRepository
+                .GetAll(inclideProperties: "Category").ToList();
+
             if (!string.IsNullOrEmpty(search))
             {
                 categories = categories.Where(x => x.Title.Contains(search)).ToList();
@@ -59,6 +63,13 @@ namespace ToDoListWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            IEnumerable<SelectListItem> CategoryList = dbcontext.CategoryRepository
+               .GetAll().Select(x => new SelectListItem
+               {
+                   Text = x.Name,
+                   Value = x.Id.ToString()
+               });
+            ViewBag.CategoryList = CategoryList;
             Product category = dbcontext.ProductRepository.Get(x => x.Id == id);
             return View(category);
         }
@@ -83,8 +94,8 @@ namespace ToDoListWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Product category = dbcontext.ProductRepository.Get(x => x.Id == id);
-            return View(category);
+            Product product = dbcontext.ProductRepository.Get(x => x.Id == id, inclideProperties: "Category");
+            return View(product);
         }
 
         [HttpPost]
@@ -109,8 +120,9 @@ namespace ToDoListWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Product category = dbcontext.ProductRepository.Get(x => x.Id == id);
-            return View(category);
+
+            Product product = dbcontext.ProductRepository.Get(x => x.Id == id, inclideProperties: "Category");
+            return View(product);
         }
 
     }
