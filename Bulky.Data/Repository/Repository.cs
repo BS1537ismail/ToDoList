@@ -51,7 +51,7 @@ namespace ToDoList.DataAccess.Repository
                 foreach (var includeProp in inclideProperties.Split(new char[] { ',' },
                     StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(includeProp);
+                    query = query.Include(includeProp.Trim());
                 }
             }
             return query.ToList();

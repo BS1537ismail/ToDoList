@@ -4,6 +4,7 @@ using ToDoList.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDoList.DataAccess.Repository;
+using X.PagedList;
 
 namespace ToDoListWeb.Areas.Admin.Controllers
 {
@@ -18,17 +19,22 @@ namespace ToDoListWeb.Areas.Admin.Controllers
             this.dbcontext = dbcontext;
             this.webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index(string search)
+        public IActionResult Index(string search, int? page)
         {
-            List<Product> categories = dbcontext.ProductRepository
-                .GetAll(inclideProperties: "Category").ToList();
+            var products = dbcontext.ProductRepository.GetAll(inclideProperties: "Category").AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
             {
-                categories = categories.Where(x => x.Title.Contains(search)).ToList();
+                products = products.Where(x => x.Title.Contains(search));
             }
-            return View(categories);
+
+     
+            int pageSize = 3; 
+            var pagedProducts = products.ToPagedList(page ?? 1, pageSize);
+
+            return View(pagedProducts);
         }
+
 
         [HttpGet]
         public IActionResult Create()
