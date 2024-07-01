@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDoList.DataAccess.Repository;
 using X.PagedList;
+using Microsoft.AspNetCore.Authorization;
+using ToDoList.Utility;
 
 namespace ToDoListWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork dbcontext;
