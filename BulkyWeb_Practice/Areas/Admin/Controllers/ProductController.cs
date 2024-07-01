@@ -25,10 +25,9 @@ namespace ToDoListWeb.Areas.Admin.Controllers
 
             if (!string.IsNullOrEmpty(search))
             {
-                products = products.Where(x => x.Title.Contains(search));
+                products = products.Where(x => x.Title.Contains(search) || x.Category.Name==search);
             }
-
-     
+            products = products.OrderBy(x => x.ListPrice);
             int pageSize = 3; 
             var pagedProducts = products.ToPagedList(page ?? 1, pageSize);
 

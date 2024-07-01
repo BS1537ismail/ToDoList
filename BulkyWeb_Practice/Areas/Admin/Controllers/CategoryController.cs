@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace ToDoListWeb.Areas.Admin.Controllers
 {
@@ -17,8 +18,11 @@ namespace ToDoListWeb.Areas.Admin.Controllers
         {
             this.dbcontext = dbcontext;
         }
-        public IActionResult Index(string search, int? page)
+        public IActionResult Index(string search, int? page, string sortOrder)
         {
+            ViewData["CategoryNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DisplayOrderSortParm"] = sortOrder == "DisplayOrder" ? "displayOrder_desc" : "DisplayOrder";
+
             var categories = dbcontext.CategoryRepository.GetAll().AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
@@ -26,6 +30,21 @@ namespace ToDoListWeb.Areas.Admin.Controllers
                 categories = categories.Where(x => x.Name.Contains(search));
             }
 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    categories = categories.OrderByDescending(s => s.Name);
+                    break;
+                case "DisplayOrder":
+                    categories = categories.OrderBy(s => s.DisplayOrder);
+                    break;
+                case "displayOrder_desc":
+                    categories = categories.OrderByDescending(s => s.DisplayOrder);
+                    break;
+                default:
+                    categories = categories.OrderBy(s => s.Name);
+                    break;
+            }
             var pagedCategories = categories.ToPagedList(page ?? 1, 3);
             return View(pagedCategories);
         }

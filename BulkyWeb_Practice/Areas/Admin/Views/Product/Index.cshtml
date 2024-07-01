@@ -8,7 +8,7 @@
 
 <form asp-controller="Product" asp-action="Index" method="get">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Product Title" name="search" value="@Context.Request.Query["search"]">
+        <input type="text" class="form-control" placeholder="Search by Title/Category" name="search" value="@Context.Request.Query["search"]">
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
 </form>
@@ -87,7 +87,7 @@
     {
         <div class="col-6">
             <a asp-controller="Product" asp-action="Index" class="btn btn-primary">
-                <i class="bi bi-x-circle"></i> &nbsp;Back To The List
+                <i class="bi bi-x-circle"></i> &nbsp;Back
             </a>
         </div>
     }

@@ -25,45 +25,48 @@
         </div>
     </div>
     <br />
-    <table class="table table-bordered table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>
-                    Category Name
-                </th>
-                <th>
-                    Display Order
-                </th>
-                <th style="text-align:center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obj in Model.OrderBy(x => x.DisplayOrder))
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
                 <tr>
-                    <td width="30%">
-                        @obj.Name
-                    </td>
-                    <td width="30%">
-                        @obj.DisplayOrder
-                    </td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                <i class="bi bi-pencil-square">Edit</i>
-                            </a>
-                            <a asp-controller="Category" asp-action="Details" asp-route-id="@obj.Id" class="btn btn-success mx-2">
-                                <i class="bi bi-bricks">Details</i>
-                            </a>
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                <i class="bi bi-trash">Delete</i>
-                            </a>
-                        </div>
-                    </td>
+                    <th>
+                        @Html.ActionLink("Category Name", "Index", new { sortOrder = ViewBag.CategoryNameSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Display Order", "Index", new { sortOrder = ViewBag.DisplayOrderSortParm })
+                    </th>
+                    <th style="text-align:center">Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="30%">
+                            @obj.Name
+                        </td>
+                        <td width="30%">
+                            @obj.DisplayOrder
+                        </td>
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square">Edit</i>
+                                </a>
+                                <a asp-controller="Category" asp-action="Details" asp-route-id="@obj.Id" class="btn btn-success mx-2">
+                                    <i class="bi bi-bricks">Details</i>
+                                </a>
+                                <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash">Delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
     @if (TempData["true"] != null)
     {
         <div class="col-6">
@@ -79,7 +82,7 @@
         @if (Model.HasPreviousPage)
         {
             <li class="page-item">
-                <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1, search = Context.Request.Query["search"] })" aria-label="Previous">
+                <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1, search = Context.Request.Query["search"], sortOrder = ViewBag.CurrentSort })" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -102,7 +105,7 @@
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i, search = Context.Request.Query["search"] })">@i</a>
+                    <a class="page-link" href="@Url.Action("Index", new { page = i, search = Context.Request.Query["search"], sortOrder = ViewBag.CurrentSort })">@i</a>
                 </li>
             }
         }
@@ -110,7 +113,7 @@
         @if (Model.HasNextPage)
         {
             <li class="page-item">
-                <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1, search = Context.Request.Query["search"] })" aria-label="Next">
+                <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1, search = Context.Request.Query["search"], sortOrder = ViewBag.CurrentSort })" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
