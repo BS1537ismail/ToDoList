@@ -65,7 +65,7 @@ namespace ToDoListWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (id == 0 || id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -96,7 +96,7 @@ namespace ToDoListWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            if (id == 0 || id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -116,13 +116,11 @@ namespace ToDoListWeb.Areas.Admin.Controllers
             dbcontext.Save();
             TempData["success"] = "Product Deleted SuccessFully";
             return RedirectToAction("Index");
-
-            return View();
         }
 
         public IActionResult Details(int id)
         {
-            if (id == 0 || id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
