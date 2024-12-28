@@ -1,9 +1,7 @@
-﻿using ToDoList.DataAccess.Data;
-using ToDoList.DataAccess.Repository.IRepository;
+﻿using ToDoList.DataAccess.Repository.IRepository;
 using ToDoList.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ToDoList.DataAccess.Repository;
 using X.PagedList;
 using Microsoft.AspNetCore.Authorization;
 using ToDoList.Utility;
