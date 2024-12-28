@@ -73,7 +73,7 @@ namespace ToDoListWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (id == 0 || id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
